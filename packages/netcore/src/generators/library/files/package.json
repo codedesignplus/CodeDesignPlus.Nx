@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "install": "dotnet restore",
+    "test": "dotnet test",
+    "build": "dotnet build"
+  },
+  "dependencies": {
+    "git-cz": "^4.9.0"
+  }
+}
