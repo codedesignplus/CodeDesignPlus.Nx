@@ -28,7 +28,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "7.0.x"
+          dotnet-version: '7.0.x'
 
       - name: Restore Package
         run: dotnet restore
@@ -44,12 +44,12 @@ jobs:
         uses: codedesignplus/semver-git-version@v0.1.4
         with:
           folder: ${{github.workspace}}
-          release-branch: "main"
-          release-candidate-branch: "rc"
-          beta-branch: "dev"
-          major-identifier: "breaking"
-          minor-identifier: "feat"
-          prefix: "v"
+          release-branch: 'main'
+          release-candidate-branch: 'rc'
+          beta-branch: 'dev'
+          major-identifier: 'breaking'
+          minor-identifier: 'feat'
+          prefix: 'v'
           dir-affected: ./
           previous-version: true
           new-version: true
@@ -101,7 +101,7 @@ jobs:
       - name: Push GitHub
         if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'
         run: |
-          dotnet nuget push "*.nupkg" --source https://nuget.pkg.github.com/codedesignplus/index.json --api-key ${{ secrets.GH_PACKAGE_TOKEN }} 
+          dotnet nuget push "*.nupkg" --source https://nuget.pkg.github.com/codedesignplus/index.json --api-key ${{ secrets.GH_PACKAGE_TOKEN }}
 
       - name: Push tag
         id: push_tag
@@ -116,7 +116,7 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v4
         if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
         with:
-          configuration: "${{ github.workspace }}/.github/settings/configuration.json"
+          configuration: '${{ github.workspace }}/.github/settings/configuration.json'
           fromTag: ${{ steps.version.outputs.previous-version-prefix }}
           toTag: ${{ steps.version.outputs.new-version-prefix }}
         env:
@@ -128,6 +128,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.version.outputs.new-version-prefix }}
-          name: "actions/codedesignplus-git-version@${{ steps.version.outputs.new-version-prefix }}"
+          name: 'actions/codedesignplus-git-version@${{ steps.version.outputs.new-version-prefix }}'
           body: ${{ steps.build_changelog.outputs.changelog }} # esto usará el changelog generado anteriormente
           prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'dev') }}

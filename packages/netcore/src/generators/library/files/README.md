@@ -35,17 +35,17 @@
   </p>
 </p>
 
-
-
 <!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
+
 - [About The Project](#about-the-project)
-  * [Key Features](#key-features)
-  * [Scripts and Dependencies](#scripts-and-dependencies)
-  * [Built With](#built-with)
+  - [Key Features](#key-features)
+  - [Scripts and Dependencies](#scripts-and-dependencies)
+  - [Built With](#built-with)
 - [Getting Started](#getting-started)
-  * [For Visual Studio Community 2022](#for-visual-studio-community-2022)
-  * [For VS Code](#for-vs-code)
+  - [For Visual Studio Community 2022](#for-visual-studio-community-2022)
+  - [For VS Code](#for-vs-code)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
@@ -53,14 +53,15 @@
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 About Me
 Hello! I am an archetype designed to assist you in creating .NET Core libraries distributed as NuGet packages. I've been crafted with the best practices and common patterns in mind to make your life easier.
 
 ### Key Features:
+
 - **Options Pattern:** I facilitate configuration and customization of your libraries using the options pattern.
 
 - **Dependency Injection:** I employ the mechanism of dependency injection to ensure effective decoupling and efficient service management. This not only eases testing and maintainability of your code but also promotes a modular and flexible structure.
@@ -72,6 +73,7 @@ Hello! I am an archetype designed to assist you in creating .NET Core libraries 
 - **Node Utilities:** I come packed with several Node.js utilities, like linters and Commitizen, to assist you in adhering to commit conventions.
 
 ### Scripts and Dependencies:
+
 In the package.json, I offer several handy scripts:
 
 - **Tools:** Install global .NET tools like dotnet-sonarscanner.
@@ -112,17 +114,18 @@ Beyond the continuous integration pipeline, this archetype brings several benefi
 - **License**: LICENSE.md details how others can use or contribute to the project.
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To dive into this archetype and set up your development environment, follow these steps:
 
 ### For Visual Studio Community 2022:
 
-  1. Open the .sln file with Visual Studio Community 2022.
-  2. Select `Build > Restore NuGet Packages` from the menu to restore dependencies.
-  3. Compile the project by selecting `Build > Build Solution`.
-  4. Run the unit tests by selecting `Test > Run All Tests`.
-  5. To package, right-click on the project you wish to package and select Pack.
+1. Open the .sln file with Visual Studio Community 2022.
+2. Select `Build > Restore NuGet Packages` from the menu to restore dependencies.
+3. Compile the project by selecting `Build > Build Solution`.
+4. Run the unit tests by selecting `Test > Run All Tests`.
+5. To package, right-click on the project you wish to package and select Pack.
 
 ### For VS Code:
 
@@ -132,37 +135,39 @@ To dive into this archetype and set up your development environment, follow thes
 
 3. Install the Recommended Extensions:
 
-    ```bash
-    code --install-extension amazonwebservices.aws-toolkit-vscode
-    code --install-extension dbaeumer.vscode-eslint
-    code --install-extension eamodio.gitlens
-    code --install-extension esbenp.prettier-vscode
-    code --install-extension github.vscode-github-actions
-    code --install-extension ms-azuretools.vscode-docker
-    code --install-extension ms-dotnettools.csharp
-    code --install-extension ms-dotnettools.vscode-dotnet-runtime
-    code --install-extension ms-vscode-remote.remote-containers
-    code --install-extension ms-vscode-remote.remote-wsl
-    code --install-extension ms-vscode.cpptools
-    code --install-extension ms-vscode.cpptools-extension-pack
-    code --install-extension ms-vscode.cpptools-themes
-    code --install-extension nrwl.angular-console
-    code --install-extension PKief.material-icon-theme
-    code --install-extension SonarSource.sonarlint-vscode
-    code --install-extension Tyriar.lorem-ipsum
-    code --install-extension vivaxy.vscode-conventional-commits
-    ```
+   ```bash
+   code --install-extension amazonwebservices.aws-toolkit-vscode
+   code --install-extension dbaeumer.vscode-eslint
+   code --install-extension eamodio.gitlens
+   code --install-extension esbenp.prettier-vscode
+   code --install-extension github.vscode-github-actions
+   code --install-extension ms-azuretools.vscode-docker
+   code --install-extension ms-dotnettools.csharp
+   code --install-extension ms-dotnettools.vscode-dotnet-runtime
+   code --install-extension ms-vscode-remote.remote-containers
+   code --install-extension ms-vscode-remote.remote-wsl
+   code --install-extension ms-vscode.cpptools
+   code --install-extension ms-vscode.cpptools-extension-pack
+   code --install-extension ms-vscode.cpptools-themes
+   code --install-extension nrwl.angular-console
+   code --install-extension PKief.material-icon-theme
+   code --install-extension SonarSource.sonarlint-vscode
+   code --install-extension Tyriar.lorem-ipsum
+   code --install-extension vivaxy.vscode-conventional-commits
+   ```
+
 4. Build and Management Procedures:
-    ```bash
-    dotnet tool install --global dotnet-sonarscanner
-    dotnet restore
-    dotnet build
-    dotnet test
-    dotnet format
-    npm install
-    npm run prepare
-    dotnet pack -c Release /p:Version=1.0.0  # Ensure to set the appropriate version
-    ```
+
+   ```bash
+   dotnet tool install --global dotnet-sonarscanner
+   dotnet restore
+   dotnet build
+   dotnet test
+   dotnet format
+   npm install
+   npm run prepare
+   dotnet pack -c Release /p:Version=1.0.0  # Ensure to set the appropriate version
+   ```
 
 5. Recommended Extensions for VS Code: These extensions enrich the development experience within VS Code:
 
@@ -183,16 +188,19 @@ To dive into this archetype and set up your development environment, follow thes
    - Conventional Commits
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 For more information regarding the library, you can visit our documentation at <a target="_blank" href="https://codedesignplus.com">CodeDesignPlus Doc</a>
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
 Refer to [issues](https://github.com/codedesignplus/CodeDesignPlus.Net.Library/issues) for a list of proposed features and known issues.
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 1. Fork the Project
@@ -202,49 +210,48 @@ Refer to [issues](https://github.com/codedesignplus/CodeDesignPlus.Net.Library/i
 5. Open a Pull Request
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE.md) for more information.
 
 <!-- CONTACT -->
+
 ## Contact
 
 CodeDesignPlus - [@CodeDesignPlus](https://www.facebook.com/Codedesignplus-115087913695067) - codedesignplus@outlook.com
 
 Project Link: [CodeDesignPlus.Net.Library](https://github.com/codedesignplus/CodeDesignPlus.Net.Library)
 
-
-
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
 
 We want to thank each member of the Latin development community in which we participate, contributing content daily to continue growing together.
 
-* [Asp.Net Core en Español](https://www.facebook.com/groups/291405831518163/?multi_permalinks=670205453638197)
-* [Asp.Net Core](https://www.facebook.com/groups/aspcore/?multi_permalinks=3454898711268798)
-* [Asp.net Core -MVC Group](https://www.facebook.com/groups/2400659736836389/?ref=group_browse)
-* [Asp.Net MVC (Español)](https://www.facebook.com/groups/180056992071066/?ref=group_browse)
-* [.Net Core](https://www.facebook.com/groups/1547819181920312/?ref=group_browse)
-* [.NET En Español PROGRAMADORES](https://www.facebook.com/groups/1537580353178689/?ref=group_browse)
-* [ASP.Net Core/C#/MVC/API/Jquery/Html/Sql/Angular/Bootstrap.](https://www.facebook.com/groups/302195073639460/?ref=group_browse)
-* [.NET en Español](https://www.facebook.com/groups/1191799410855661/?ref=group_browse)
-* [Blazor - ASP.NET Core](https://www.facebook.com/groups/324620021830833/?ref=group_browse)
-* [C# (.NET)](https://www.facebook.com/groups/354915134536797/?ref=group_browse)
-* [ASP.NET MVC(C#)](https://www.facebook.com/groups/663936840427220/?ref=group_browse)
-* [Programación C# .Net Peru](https://www.facebook.com/groups/559287427442678/?ref=group_browse)
-* [ASP.NET and ASP.NET Core](https://www.facebook.com/groups/160807057346964/?ref=group_browse)
-* [ASP.NET AND .NET CORE](https://www.facebook.com/groups/147648562098634/?ref=group_browse)
-* [C#, MVC & .NET CORE 3.1](https://www.facebook.com/groups/332314354403273/?ref=group_browse)
-* [.NET Core Community](https://www.facebook.com/groups/2128178990740761/?ref=group_browse)
-* [Desarrolladores .Net, C#, React](https://www.facebook.com/groups/2907866402565621/?ref=group_browse)
-* [Programadores C#](https://www.facebook.com/groups/304179163001281/?ref=group_browse)
-* [.NET Core](https://www.facebook.com/groups/136495930173074/?ref=group_browse)
-* [ASP.NET EN ESPAÑOL](https://www.facebook.com/groups/507683892666901/?ref=group_browse)
-* [Desarrolladores Microsoft.Net](https://www.facebook.com/groups/169250349939705/?ref=group_browse)
-* [ASP.NET Core](https://www.facebook.com/groups/141597583026616/?ref=group_browse)
-* [Grupo de Desarrolladores .Net de Microsoft](https://www.facebook.com/groups/15270556519/?ref=group_browse)
-
-
+- [Asp.Net Core en Español](https://www.facebook.com/groups/291405831518163/?multi_permalinks=670205453638197)
+- [Asp.Net Core](https://www.facebook.com/groups/aspcore/?multi_permalinks=3454898711268798)
+- [Asp.net Core -MVC Group](https://www.facebook.com/groups/2400659736836389/?ref=group_browse)
+- [Asp.Net MVC (Español)](https://www.facebook.com/groups/180056992071066/?ref=group_browse)
+- [.Net Core](https://www.facebook.com/groups/1547819181920312/?ref=group_browse)
+- [.NET En Español PROGRAMADORES](https://www.facebook.com/groups/1537580353178689/?ref=group_browse)
+- [ASP.Net Core/C#/MVC/API/Jquery/Html/Sql/Angular/Bootstrap.](https://www.facebook.com/groups/302195073639460/?ref=group_browse)
+- [.NET en Español](https://www.facebook.com/groups/1191799410855661/?ref=group_browse)
+- [Blazor - ASP.NET Core](https://www.facebook.com/groups/324620021830833/?ref=group_browse)
+- [C# (.NET)](https://www.facebook.com/groups/354915134536797/?ref=group_browse)
+- [ASP.NET MVC(C#)](https://www.facebook.com/groups/663936840427220/?ref=group_browse)
+- [Programación C# .Net Peru](https://www.facebook.com/groups/559287427442678/?ref=group_browse)
+- [ASP.NET and ASP.NET Core](https://www.facebook.com/groups/160807057346964/?ref=group_browse)
+- [ASP.NET AND .NET CORE](https://www.facebook.com/groups/147648562098634/?ref=group_browse)
+- [C#, MVC & .NET CORE 3.1](https://www.facebook.com/groups/332314354403273/?ref=group_browse)
+- [.NET Core Community](https://www.facebook.com/groups/2128178990740761/?ref=group_browse)
+- [Desarrolladores .Net, C#, React](https://www.facebook.com/groups/2907866402565621/?ref=group_browse)
+- [Programadores C#](https://www.facebook.com/groups/304179163001281/?ref=group_browse)
+- [.NET Core](https://www.facebook.com/groups/136495930173074/?ref=group_browse)
+- [ASP.NET EN ESPAÑOL](https://www.facebook.com/groups/507683892666901/?ref=group_browse)
+- [Desarrolladores Microsoft.Net](https://www.facebook.com/groups/169250349939705/?ref=group_browse)
+- [ASP.NET Core](https://www.facebook.com/groups/141597583026616/?ref=group_browse)
+- [Grupo de Desarrolladores .Net de Microsoft](https://www.facebook.com/groups/15270556519/?ref=group_browse)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

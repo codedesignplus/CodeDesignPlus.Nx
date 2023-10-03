@@ -1,5 +1,3 @@
 module.exports = {
-  '{src,tests}/**/*.{cs}': [
-    'dotnet format --include '
-  ]
+  '{src,tests}/**/*.{cs}': ['dotnet format --include '],
 };
