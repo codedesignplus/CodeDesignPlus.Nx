@@ -52,12 +52,14 @@ export async function libraryGenerator(
 function copyTemplate(sourcePath: string, target: string) {
   const source = `${sourcePath}/submodules/CodeDesignPlus.Net.Library`;
 
-  if (!existsSync(source)) return;
-
   try {
-    rmSync(source, {
-      recursive: true,
-    });
+    if (!existsSync(source)) return;
+
+    if (existsSync(target)) {
+      rmSync(target, {
+        recursive: true,
+      });
+    }
 
     cpSync(source, target, {
       recursive: true,
