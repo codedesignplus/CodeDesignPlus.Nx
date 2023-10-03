@@ -7,7 +7,7 @@
     "affected": "npx nx show projects --affected  -- --base=remotes/origin/main~1",
     "affected:submodule": "npx nx affected --target=submodule --parallel 3",
     "affected:lint": "nx affected --target lint --parallel 3 --uncommitted --fix true",
-    "affected:test": "npx nx affected --target=test --parallel 3",
+    "affected:test": "npx nx affected --target=test --parallel 3 --ci --code-coverage",
     "affected:build": "npx nx affected --target=build --parallel 3",
     "publish": "ts-node --files ./scripts/index.ts",
     "prepare": "husky install",
