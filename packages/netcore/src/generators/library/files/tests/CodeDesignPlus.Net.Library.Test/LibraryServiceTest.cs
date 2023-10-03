@@ -1,4 +1,4 @@
-using CodeDesignPlus.Net.Library.Options;
+﻿using CodeDesignPlus.Net.Library.Options;
 using CodeDesignPlus.Net.Library.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -19,6 +19,6 @@ public class LibraryServiceTest
         var actual = await new LibraryService(logger, options).EchoAsync(expected);
 
         // Assert
-        Assert.Equal(expected, actual); 
+        Assert.Equal(expected, actual);
     }
 }

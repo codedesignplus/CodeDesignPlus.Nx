@@ -127,6 +127,7 @@ function replace(value: string, options: LibraryGeneratorSchema) {
  */
 function allFilesInDir(source: string): string[] {
   let files: string[] = [];
+  const exclude = ['bin', 'obj'];
 
   readdirSync(source).forEach((x) => {
     const child = path.join(source, x);
@@ -135,7 +136,7 @@ function allFilesInDir(source: string): string[] {
 
     if (!state.isDirectory()) {
       files.push(child);
-    } else if (state.isDirectory()) {
+    } else if (state.isDirectory() && !exclude.includes(x)) {
       files = [...files, ...allFilesInDir(child)];
     }
   });
