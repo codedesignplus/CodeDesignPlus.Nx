@@ -24,12 +24,12 @@ jobs:
         yarn-version: ['1.22.x']
         pnpm-version: [8]
     steps:
-      # - name: Checkout [Default Branch]
-      #   uses: actions/checkout@v2
-      #   if: ${{ github.event_name != 'pull_request' }}
-      #   with:
-      #     token: ${{ secrets.GH_TOKEN }}
-      #     fetch-depth: 0
+      - name: Checkout [Default Branch]
+        uses: actions/checkout@v4
+        #if: ${{ github.event_name != 'pull_request' }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
