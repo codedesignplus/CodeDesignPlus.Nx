@@ -1,4 +1,11 @@
-import { cpSync, existsSync, readFileSync, readdirSync, statSync } from 'fs';
+import {
+  cpSync,
+  existsSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  statSync,
+} from 'fs';
 import { addProjectConfiguration, formatFiles, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { LibraryGeneratorSchema } from './schema';
@@ -48,6 +55,10 @@ function copyTemplate(sourcePath: string, target: string) {
   if (!existsSync(source)) return;
 
   try {
+    rmSync(source, {
+      recursive: true,
+    });
+
     cpSync(source, target, {
       recursive: true,
     });

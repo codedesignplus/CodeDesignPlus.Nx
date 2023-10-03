@@ -10,6 +10,7 @@
     "affected:build": "npx nx affected --target=build",
     "affected:pack": "npx nx affected --target=pack",
     "affected:test": "npx nx affected --target=test",
+    "affected:submodule": "npx nx affected --target=submodule",
     "prepare": "husky install",
     "affected:lint": "nx affected --target lint --uncommitted --fix true",
     "format:write": "nx format:write --uncommitted"
