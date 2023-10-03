@@ -1,6 +1,6 @@
 {
   "name": "codedesignplus",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "build": "npx nx run-many",
