@@ -1,13 +1,20 @@
 {
   "name": "codedesignplus",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.1",
   "license": "MIT",
   "scripts": {
-    "update-submodules": "git submodule update --remote",
+    "update-submodules": "git submodule update --remote --force",
+    "publish": "ts-node --files ./scripts/publish.ts",
+    "build": "npx nx run-many",
+    "affected": "npx nx show projects --affected  -- --base=remotes/origin/main~1",
+    "affected:build": "npx nx affected --target=build",
+    "affected:pack": "npx nx affected --target=pack",
+    "affected:test": "npx nx affected --target=test",
     "prepare": "husky install"
   },
   "private": true,
   "devDependencies": {
+    "@actions/core": "^1.10.1",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
     "@commitlint/config-nx-scopes": "^17.6.4",
@@ -41,6 +48,7 @@
   "dependencies": {
     "@nx/devkit": "16.5.5",
     "@swc/helpers": "~0.5.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@codedesignplus/git-version": "0.1.0-beta.67"
   }
 }
