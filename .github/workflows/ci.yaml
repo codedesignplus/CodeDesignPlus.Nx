@@ -4,7 +4,11 @@ on:
     branches:
       - main
       - feature/*
+
 env:
+  IS_RELEASE: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
+  IS_RC: ${{ github.ref == 'refs/heads/rc' }}
+  IS_BETA: ${{ github.ref == 'refs/heads/dev' }}
   HUSKY: 0
 
 jobs:
@@ -94,6 +98,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
 
+      - name: Git Version
+        id: test-action
+        uses: codedesignplus/semver-git-version@v0.1.4
+        with:
+          folder: ${{github.workspace}}
+          release-branch: 'main'
+          release-candidate-branch: 'rc'
+          beta-branch: 'dev'
+          major-identifier: 'breaking'
+          minor-identifier: 'feat'
+          prefix: 'v'
+          previous-version: true
+          new-version: true
+
+      - name: Print Output
+        id: output
+        run: |
+          echo Previous Tag "${{ steps.test-action.outputs.previous-tag }}"
+          echo Previous Version "${{ steps.test-action.outputs.previous-version }}"
+          echo Previous Version Prefix "${{ steps.test-action.outputs.previous-version-prefix }}"
+          echo New Version "${{steps.test-action.outputs.new-version}}"
+          echo New Version Prefix "${{steps.test-action.outputs.new-version-prefix}}"
+
       - name: Install dependencies
         run: |
           if [ "${{ steps.package_manager.outputs.name == 'yarn' }}" == "true" ]; then
@@ -108,17 +135,39 @@ jobs:
           fi
 
       - run: |
-          pnpm run update-submodules
-          npx nx workspace-lint
-          npx nx format:check
-          npx nx affected --target lint --parallel 3
-          npx nx affected --target test --parallel 3 --ci --code-coverage
-          npx nx affected --target build --parallel 3
+          pnpm run affected
+          pnpm run affected:submodule
+          pnpm run format:check
+          pnpm run affected:lint --target lint --parallel 3
+          pnpm run affected:test --target test --parallel 3 --ci --code-coverage
+          pnpm run affected:build --target build --parallel 3
+          pnpm run publish
 
-      - name: Release
-        if: ${{ success() }}
+      - name: Push tag
+        id: push_tag
+        # if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          custom_tag: ${{ steps.test-action.outputs.new-version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Changelog
+        # if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: '${{ github.workspace }}/.github/settings/configuration.json'
+          fromTag: ${{ steps.test-action.outputs.previous-version-prefix }}
+          toTag: ${{ steps.test-action.outputs.new-version-prefix }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NUGET_TOKEN }}
-        run: |
-          npx nx run-many affected --target release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        # if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
+        uses: mikepenz/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.test-action.outputs.new-version-prefix }}
+          name: 'codedesignplus/nx@${{ steps.test-action.outputs.new-version-prefix }}'
+          body: ${{ steps.build_changelog.outputs.changelog }}
+          prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'dev') }}
