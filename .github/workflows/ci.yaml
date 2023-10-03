@@ -33,68 +33,11 @@ jobs:
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
-        # with:
-        #   main-branch-name: ${{ github.base_ref }}
-
-      - name: Echo SHAs
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-
-      - name: Detect package manager
-        id: package_manager
-        run: |
-          echo "::set-output name=name::$([[ -f ./yarn.lock ]] && echo "yarn" || ([[ -f ./pnpm-lock.yaml ]] && echo "pnpm") || echo "npm")"
 
       - name: Install PNPM
-        if: steps.package_manager.outputs.name == 'pnpm'
-        uses: pnpm/action-setup@v2.2.1
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: 8
-
-      - name: Print node/npm/yarn/pnpm versions
-        id: versions
-        run: |
-          node_ver=$( node --version )
-          yarn_ver=$( yarn --version || true )
-          pnpm_ver=$( pnpm --version || true )
-          echo "Node: ${node_ver:1}"
-          echo "NPM: $(npm --version )"
-          if [[ $yarn_ver != '' ]]; then echo "Yarn: $yarn_ver"; fi
-          if [[ $pnpm_ver != '' ]]; then echo "PNPM: $pnpm_ver"; fi
-          echo "::set-output name=node_version::${node_ver:1}"
-
-      - name: Use the node_modules cache if available [npm]
-        if: steps.package_manager.outputs.name == 'npm'
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
-
-      - name: Use the node_modules cache if available [pnpm]
-        if: steps.package_manager.outputs.name == 'pnpm'
-        uses: actions/cache@v2
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
-
-      - name: Get yarn cache directory path
-        if: steps.package_manager.outputs.name == 'yarn'
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Use the node_modules cache if available [yarn]
-        if: steps.package_manager.outputs.name == 'yarn'
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-
 
       - name: Git Version
         id: test-action
@@ -110,35 +53,17 @@ jobs:
           previous-version: true
           new-version: true
 
-      - name: Print Output
-        id: output
-        run: |
-          echo Previous Tag "${{ steps.test-action.outputs.previous-tag }}"
-          echo Previous Version "${{ steps.test-action.outputs.previous-version }}"
-          echo Previous Version Prefix "${{ steps.test-action.outputs.previous-version-prefix }}"
-          echo New Version "${{steps.test-action.outputs.new-version}}"
-          echo New Version Prefix "${{steps.test-action.outputs.new-version-prefix}}"
-
       - name: Install dependencies
         run: |
-          if [ "${{ steps.package_manager.outputs.name == 'yarn' }}" == "true" ]; then
-            echo "Running yarn install --frozen-lockfile"
-            yarn install --frozen-lockfile
-          elif [ "${{ steps.package_manager.outputs.name == 'pnpm' }}" == "true" ]; then
-            echo "Running pnpm install --frozen-lockfile"
-            pnpm install --frozen-lockfile
-          else
-            echo "Running npm ci"
-            npm ci
-          fi
+          pnpm install --frozen-lockfile
 
       - run: |
           pnpm run affected
           pnpm run affected:submodule
           pnpm run format:check
-          pnpm run affected:lint --target lint --parallel 3
-          pnpm run affected:test --target test --parallel 3 --ci --code-coverage
-          pnpm run affected:build --target build --parallel 3
+          pnpm run affected:lint --target lint
+          pnpm run affected:test --target test
+          pnpm run affected:build --target build
           pnpm run publish
 
       - name: Push tag
