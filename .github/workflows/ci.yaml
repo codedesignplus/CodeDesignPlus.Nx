@@ -3,8 +3,9 @@ on:
   push:
     branches:
       - main
+      - rc
+      - dev
       - feature/*
-
 env:
   IS_RELEASE: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
   IS_RC: ${{ github.ref == 'refs/heads/rc' }}
@@ -76,15 +77,6 @@ jobs:
 
       - name: Run Publish
         run: pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
-
-      # - run: |
-      #     pnpm run affected
-      #     pnpm run affected:submodule
-      #     pnpm run format:check
-      #     pnpm run affected:lint --target lint
-      #     pnpm run affected:test --target test
-      #     pnpm run affected:build --target build
-      #     pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
 
       - name: Push tag
         id: push_tag
