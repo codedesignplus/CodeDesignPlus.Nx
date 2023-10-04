@@ -14,15 +14,9 @@ env:
 jobs:
   main:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-    # strategy:
-    #   matrix:
-    #     node-version: [20]
-    #     npm-version: [9]
-    #     yarn-version: ['1.22.x']
-    #     pnpm-version: [8]
+    permissions:
+      contents: write
+      packages: write
     steps:
       - name: Checkout [Default Branch]
         uses: actions/checkout@v4
@@ -52,6 +46,11 @@ jobs:
           prefix: 'v'
           previous-version: true
           new-version: true
+
+      - name: Config Git
+        run: |
+          git config user.name "CodeDesignPlus"
+          git config user.email "codedesignplus@outlook.com"
 
       - name: Install dependencies
         run: |
