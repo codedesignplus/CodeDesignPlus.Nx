@@ -7,4 +7,12 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/netcore',
+  collectCoverage: true,
+  coverageReporters: ['json-summary', 'text', 'lcov'],
+  collectCoverageFrom: ['./src/**'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/__tests__/',
+    '.*/library/files/.*',
+  ],
 };
