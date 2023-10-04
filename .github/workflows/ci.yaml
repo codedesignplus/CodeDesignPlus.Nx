@@ -59,10 +59,10 @@ jobs:
 
       - name: Run Affected
         run: pnpm run affected
-        
+
       - name: Run Format:Check
         run: pnpm run format:check
-        
+
       - name: Run Affected Lint
         run: pnpm run affected:lint --target lint
 
@@ -73,7 +73,7 @@ jobs:
         run: pnpm run affected:submodule
 
       - name: Run Affected Build
-        run: pnpm run affected:build --target build 
+        run: pnpm run affected:build --target build
 
       - name: Run Publish
         run: pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
@@ -84,7 +84,7 @@ jobs:
       #     pnpm run format:check
       #     pnpm run affected:lint --target lint
       #     pnpm run affected:test --target test
-      #     pnpm run affected:build --target build 
+      #     pnpm run affected:build --target build
       #     pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
 
       - name: Push tag

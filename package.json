@@ -12,7 +12,7 @@
     "publish": "ts-node --files ./scripts/index.ts",
     "prepare": "husky install",
     "format:check": "npx nx format:check",
-    "format:write": "nx format:write --uncommitted"
+    "format:write": "nx format:write"
   },
   "private": true,
   "devDependencies": {
