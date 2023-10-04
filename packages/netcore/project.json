@@ -60,6 +60,9 @@
           "codeCoverage": true
         }
       }
+    },
+    "submodule": {
+      "command": "git submodule add -f https://github.com/codedesignplus/CodeDesignPlus.Net.Library.git ./submodules/CodeDesignPlus.Net.Library && rm -rf ./packages/netcore/src/generators/library/files/* && cp -r ./submodules/CodeDesignPlus.Net.Library/* ./packages/netcore/src/generators/library/files/"
     }
   },
   "tags": []

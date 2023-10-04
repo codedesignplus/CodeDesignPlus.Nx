@@ -1,6 +1,12 @@
 {
-  "name": "netcore",
-  "version": "0.0.1",
+  "name": "@codedesignplus/netcore",
+  "version": "0.0.0",
   "type": "commonjs",
-  "generators": "./generators.json"
+  "generators": "./generators.json",
+  "author": {
+    "email": "codedesignplus@outlook.com",
+    "name": "CodeDesignPlus",
+    "url": "https://codedesignplus.com/"
+  },
+  "description": "An archetype generator designed to streamline the creation and initial setup of .NET libraries, harnessing best practices and common structures for .NET development."
 }
