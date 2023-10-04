@@ -74,6 +74,7 @@ jobs:
         run: pnpm run affected:build --target build
 
       - name: Run Publish
+        if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'
         run: pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
 
       - name: Push tag
@@ -83,17 +84,6 @@ jobs:
         with:
           custom_tag: ${{ steps.test-action.outputs.new-version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Build Changelog
-      #   if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
-      #   id: build_changelog
-      #   uses: mikepenz/release-changelog-builder-action@v4
-      #   with:
-      #     configuration: '${{ github.workspace }}/.github/settings/configuration.json'
-      #     fromTag: ${{ steps.test-action.outputs.previous-version-prefix }}
-      #     toTag: ${{ steps.test-action.outputs.new-version-prefix }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'

@@ -152,6 +152,19 @@ export class Publish {
 
     fs.writeFileSync(`${packagePath}/.npmrc`, content, 'utf8');
 
+    execSync(
+      `npm publish --registry=https://registry.npmjs.org/ --access public`,
+      {
+        cwd: packagePath,
+      }
+    );
+    execSync(
+      `npm publish --registry=https://npm.pkg.github.com/ --access public`,
+      {
+        cwd: packagePath,
+      }
+    );
+
     this.createTag(newVersion['version-complete']);
   };
 
