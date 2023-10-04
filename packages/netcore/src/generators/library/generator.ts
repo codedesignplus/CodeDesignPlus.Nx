@@ -1,4 +1,11 @@
-import { cpSync, existsSync, readFileSync, readdirSync, statSync } from 'fs';
+import {
+  cpSync,
+  existsSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  statSync,
+} from 'fs';
 import { addProjectConfiguration, formatFiles, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { LibraryGeneratorSchema } from './schema';
@@ -45,9 +52,15 @@ export async function libraryGenerator(
 function copyTemplate(sourcePath: string, target: string) {
   const source = `${sourcePath}/submodules/CodeDesignPlus.Net.Library`;
 
-  if (!existsSync(source)) return;
-
   try {
+    if (!existsSync(source)) return;
+
+    if (!existsSync(target)) {
+      rmSync(target, {
+        recursive: true,
+      });
+    }
+
     cpSync(source, target, {
       recursive: true,
     });
@@ -127,6 +140,7 @@ function replace(value: string, options: LibraryGeneratorSchema) {
  */
 function allFilesInDir(source: string): string[] {
   let files: string[] = [];
+  const exclude = ['bin', 'obj'];
 
   readdirSync(source).forEach((x) => {
     const child = path.join(source, x);
@@ -135,7 +149,7 @@ function allFilesInDir(source: string): string[] {
 
     if (!state.isDirectory()) {
       files.push(child);
-    } else if (state.isDirectory()) {
+    } else if (state.isDirectory() && !exclude.includes(x)) {
       files = [...files, ...allFilesInDir(child)];
     }
   });

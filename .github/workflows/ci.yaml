@@ -1,0 +1,106 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - main
+      - rc
+      - dev
+      - feature/*
+env:
+  IS_RELEASE: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
+  IS_RC: ${{ github.ref == 'refs/heads/rc' }}
+  IS_BETA: ${{ github.ref == 'refs/heads/dev' }}
+  HUSKY: 0
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout [Default Branch]
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2.4.0
+        with:
+          version: 8
+
+      - name: Git Version
+        id: test-action
+        uses: codedesignplus/semver-git-version@v0.1.4
+        with:
+          folder: ${{github.workspace}}
+          release-branch: 'main'
+          release-candidate-branch: 'rc'
+          beta-branch: 'dev'
+          major-identifier: 'breaking'
+          minor-identifier: 'feat'
+          prefix: 'v'
+          previous-version: true
+          new-version: true
+
+      - name: Config Git
+        run: |
+          git config user.name "CodeDesignPlus"
+          git config user.email "codedesignplus@outlook.com"
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Run Affected
+        run: pnpm run affected
+
+      - name: Run Format:Check
+        run: pnpm run format:check
+
+      - name: Run Affected Lint
+        run: pnpm run affected:lint --target lint
+
+      - name: Run Affected Test
+        run: pnpm run affected:test --target test
+
+      - name: Run Affected SubModules
+        run: pnpm run affected:submodule
+
+      - name: Run Affected Build
+        run: pnpm run affected:build --target build
+
+      - name: Run Publish
+        run: pnpm run publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push tag
+        id: push_tag
+        if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          custom_tag: ${{ steps.test-action.outputs.new-version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Build Changelog
+      #   if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
+      #   id: build_changelog
+      #   uses: mikepenz/release-changelog-builder-action@v4
+      #   with:
+      #     configuration: '${{ github.workspace }}/.github/settings/configuration.json'
+      #     fromTag: ${{ steps.test-action.outputs.previous-version-prefix }}
+      #     toTag: ${{ steps.test-action.outputs.new-version-prefix }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Release
+        if: env.IS_RELEASE == 'true' || env.IS_RC == 'true'
+        uses: mikepenz/action-gh-release@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.test-action.outputs.new-version-prefix }}
+          name: 'codedesignplus/nx@${{ steps.test-action.outputs.new-version-prefix }}'
+          body: ${{ steps.push_tag.outputs.changelog }}
+          prerelease: ${{ contains(github.ref, 'rc') || contains(github.ref, 'dev') }}
