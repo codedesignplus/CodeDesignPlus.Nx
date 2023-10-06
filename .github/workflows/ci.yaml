@@ -62,16 +62,19 @@ jobs:
         run: pnpm run format:check
 
       - name: Run Affected Lint
-        run: pnpm run affected:lint --target lint
+        run: pnpm run affected:lint
 
       - name: Run Affected Test
-        run: pnpm run affected:test --target test
+        run: pnpm run affected:test
 
       - name: Run Affected SubModules
         run: pnpm run affected:submodule
 
       - name: Run Affected Build
-        run: pnpm run affected:build --target build
+        run: pnpm run affected:build
+
+      - name: Run Affected SonarQube
+        run: pnpm run affected:sonarqube
 
       - name: Run Publish
         if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'

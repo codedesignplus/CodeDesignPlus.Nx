@@ -14,5 +14,6 @@ export default {
     '/node_modules/',
     '/__tests__/',
     '.*/library/files/.*',
+    '.*.d.ts.*',
   ],
 };
