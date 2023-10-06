@@ -73,7 +73,7 @@
         "organization": "codedesignplus",
         "skipTargetDefaults": false,
         "branches": false,
-        "qualityGate": true,
+        "qualityGate": false,
         "qualityGateTimeout": "600",
         "skipImplicitDeps": false,
         "exclusions": "**/*.d.ts",

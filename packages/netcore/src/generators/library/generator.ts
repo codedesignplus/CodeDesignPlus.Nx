@@ -37,9 +37,11 @@ export async function libraryGenerator(
     targets: {},
   });
 
-  copyTemplate(tree.root, source);
+  const template = copyTemplate(tree.root, source);
 
-  generateFiles(tree, source, target, options);
+  if (template) {
+    generateFiles(tree, source, target, options);
+  }
 
   await formatFiles(tree);
 }
@@ -49,28 +51,26 @@ export async function libraryGenerator(
  * @param target Source destination
  * @param sourcePath Source origin
  */
-function copyTemplate(sourcePath: string, target: string) {
+export function copyTemplate(sourcePath: string, target: string): boolean {
   const source = `${sourcePath}/submodules/CodeDesignPlus.Net.Library`;
 
-  try {
-    if (!existsSync(source)) return;
+  if (!existsSync(source)) {
+    logger.warn(`The ${source} not found`);
 
-    if (!existsSync(target)) {
-      rmSync(target, {
-        recursive: true,
-      });
-    }
+    return false;
+  }
 
-    cpSync(source, target, {
+  if (existsSync(target)) {
+    rmSync(target, {
       recursive: true,
     });
-  } catch (error) {
-    logger.error(
-      `Error copy files from ${source} to ${target}: ${error.message}`
-    );
-
-    throw error;
   }
+
+  cpSync(source, target, {
+    recursive: true,
+  });
+
+  return true;
 }
 
 /**
@@ -80,7 +80,7 @@ function copyTemplate(sourcePath: string, target: string) {
  * @param target Source destination
  * @param options Library Options
  */
-function generateFiles(
+export function generateFiles(
   tree: Tree,
   source: string,
   target: string,
@@ -89,19 +89,11 @@ function generateFiles(
   const files = allFilesInDir(source);
 
   files.forEach((filePath) => {
-    let newContent: Buffer | string;
-
     const newFile = computePath(source, target, filePath);
 
     const template = readFileSync(filePath, 'utf-8');
 
-    try {
-      newContent = replace(template, options);
-    } catch (e) {
-      logger.error(`Error in ${filePath.replace(`${tree.root}/`, '')}:`);
-
-      throw e;
-    }
+    const newContent = replace(template, options);
 
     tree.write(newFile, newContent);
   });
@@ -115,7 +107,11 @@ function generateFiles(
  * @param options Library Options
  * @returns Return an new string of the path the file with the target update
  */
-function computePath(source: string, target: string, filePath: string): string {
+export function computePath(
+  source: string,
+  target: string,
+  filePath: string
+): string {
   const relativeFromSrcFolder = path.relative(source, filePath);
 
   return path.join(target, relativeFromSrcFolder);
@@ -127,7 +123,7 @@ function computePath(source: string, target: string, filePath: string): string {
  * @param options Object with the new values to set to the param value
  * @returns Return a new string with the new values
  */
-function replace(value: string, options: LibraryGeneratorSchema) {
+export function replace(value: string, options: LibraryGeneratorSchema) {
   return value
     .replace(/CodeDesignPlus/g, options.org)
     .replace(/Library/g, options.name);
@@ -138,7 +134,7 @@ function replace(value: string, options: LibraryGeneratorSchema) {
  * @param source Directory to scan
  * @returns Return an array of the string with all files with yours path
  */
-function allFilesInDir(source: string): string[] {
+export function allFilesInDir(source: string): string[] {
   let files: string[] = [];
   const exclude = ['bin', 'obj'];
 
@@ -153,12 +149,6 @@ function allFilesInDir(source: string): string[] {
       files = [...files, ...allFilesInDir(child)];
     }
   });
-
-  if (files.length === 0) {
-    throw new Error(
-      `generator: No files found in "${source}". Are you sure you specified the correct path?`
-    );
-  }
 
   return files;
 }
