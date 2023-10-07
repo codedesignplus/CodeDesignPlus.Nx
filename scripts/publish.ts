@@ -123,7 +123,7 @@ export class Publish {
    * @returns The complete new version string.
    */
   private deployLib = (name: string) => {
-    console.info(`********** Deploy lib ${name} **********`);
+    this.logTitle(`Deploy lib ${name}`);
 
     const projectPath = path.join(__dirname, '../', 'packages', name);
     const packagePath = path.join(__dirname, '../', 'dist', 'packages', name);
@@ -140,38 +140,38 @@ export class Publish {
       newVersion,
     });
 
-    console.log(`********** Set Version: ${newVersion.version} **********`);
+    this.logTitle(`Set Version: ${newVersion.version}`);
 
     execSync(`npm version ${newVersion.version} --no-git-tag-version`, {
       cwd: projectPath,
     });
 
-    console.log(`********** Build affected ************`);
+    this.logTitle(`Build affected**`);
 
     execSync(`npx nx affected:build`);
 
-    console.log(`********** Package ************`);
+    this.logTitle(`Package**`);
 
     execSync(`npm pack --pack-destination ${packagePath}`, {
       cwd: packagePath,
     });
 
-    console.log(`********** Write .npmrc ************`);
+    this.logTitle(`Write .npmrc**`);
 
     const content = `//registry.npmjs.org/:_authToken=${this.tokens.npm} \n//npm.pkg.github.com/:_authToken=${this.tokens.github}`;
 
     fs.writeFileSync(`${packagePath}/.npmrc`, content, 'utf8');
 
-    // console.log(`********** Publish npmjs ************`);
+    this.logTitle(`Publish npmjs**`);
 
-    // execSync(
-    //   `npm publish --registry=https://registry.npmjs.org/ --access public`,
-    //   {
-    //     cwd: packagePath,
-    //   }
-    // );
+    execSync(
+      `npm publish --registry=https://registry.npmjs.org/ --access public`,
+      {
+        cwd: packagePath,
+      }
+    );
 
-    console.log(`********** Publish github ************`);
+    this.logTitle(`Publish github**`);
 
     execSync(
       `npm publish --registry=https://npm.pkg.github.com/ --access public`,
@@ -180,7 +180,7 @@ export class Publish {
       }
     );
 
-    console.log(`********** Create Tag ************`);
+    this.logTitle(`Create Tag**`);
 
     this.createTag(newVersion['version-complete']);
   };
@@ -198,4 +198,30 @@ export class Publish {
       this.deployLib(lib);
     }
   };
+
+  /**
+   * Imprime un título centrado entre dos líneas de asteriscos.
+   *
+   * @function
+   * @param {string} title - El título que se desea imprimir.
+   * @example
+   *
+   * logTitle("Publish github");
+   * // *****************************************
+   * // ************ Publish github *************
+   * // *****************************************
+   */
+  private logTitle(title: string): void {
+    const totalLength = 40;
+    const titleLength = title.length;
+    const spaceForPadding = totalLength - titleLength - 2 * 2;
+    const paddingPerSide = spaceForPadding / 2;
+
+    const line = '*'.repeat(totalLength);
+    const sidePadding = '*'.repeat(paddingPerSide);
+
+    console.log(line);
+    console.log(`${sidePadding} ${title} ${sidePadding}`);
+    console.log(line);
+  }
 }
