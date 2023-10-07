@@ -123,6 +123,8 @@ export class Publish {
    * @returns The complete new version string.
    */
   private deployLib = (name: string) => {
+    console.info(`********** Deploy lib ${name} **********`);
+
     const projectPath = path.join(__dirname, '../', 'packages', name);
     const packagePath = path.join(__dirname, '../', 'dist', 'packages', name);
 
@@ -138,19 +140,29 @@ export class Publish {
       newVersion,
     });
 
+    console.log(`********** Set Version: ${newVersion.version} **********`);
+
     execSync(`npm version ${newVersion.version} --no-git-tag-version`, {
       cwd: projectPath,
     });
 
+    console.log(`********** Build affected ************`);
+
     execSync(`npx nx affected:build`);
+
+    console.log(`********** Package ************`);
 
     execSync(`npm pack --pack-destination ${packagePath}`, {
       cwd: packagePath,
     });
 
+    console.log(`********** Write .npmrc ************`);
+
     const content = `//registry.npmjs.org/:_authToken=${this.tokens.npm} \n//npm.pkg.github.com/:_authToken=${this.tokens.github}`;
 
     fs.writeFileSync(`${packagePath}/.npmrc`, content, 'utf8');
+
+    console.log(`********** Publish npmjs ************`);
 
     execSync(
       `npm publish --registry=https://registry.npmjs.org/ --access public`,
@@ -158,12 +170,17 @@ export class Publish {
         cwd: packagePath,
       }
     );
+
+    console.log(`********** Publish github ************`);
+
     execSync(
       `npm publish --registry=https://npm.pkg.github.com/ --access public`,
       {
         cwd: packagePath,
       }
     );
+
+    console.log(`********** Create Tag ************`);
 
     this.createTag(newVersion['version-complete']);
   };
