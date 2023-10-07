@@ -36,11 +36,9 @@ export async function libraryGenerator(
     targets: {},
   });
 
-  const template = copyTemplate(tree.root, source);
+  copyTemplate(tree.root, source);
 
-  if (template) {
-    generateFiles(tree, source, target, options);
-  }
+  generateFiles(tree, source, target, options);
 
   await formatFiles(tree);
 }
@@ -55,6 +53,12 @@ export function copyTemplate(sourcePath: string, target: string): boolean {
 
   if (!existsSync(source)) {
     return false;
+  }
+
+  if (existsSync(target)) {
+    rmSync(target, {
+      recursive: true,
+    });
   }
 
   cpSync(source, target, {
