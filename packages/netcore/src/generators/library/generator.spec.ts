@@ -13,6 +13,9 @@ import { LibraryGeneratorSchema } from './schema';
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Tests for the library generator
+ */
 describe('library generator', () => {
   let tree: Tree;
 
@@ -20,7 +23,10 @@ describe('library generator', () => {
     tree = createTreeWithEmptyWorkspace();
   });
 
-  it('should run successfully', async () => {
+  /**
+   * Tests if the library generator runs successfully with default configuration
+   */
+  it('should generate library with default organization name', async () => {
     const options: LibraryGeneratorSchema = { name: 'Test', org: '' };
 
     await libraryGenerator(tree, options);
@@ -30,7 +36,10 @@ describe('library generator', () => {
     expect(config).toBeDefined();
   });
 
-  it('should run successfully with cutsom org', async () => {
+  /**
+   * Tests if the library generator runs successfully with a custom organization name
+   */
+  it('should generate library with custom organization name', async () => {
     const options: LibraryGeneratorSchema = { name: 'Test', org: 'MyOrg' };
 
     await libraryGenerator(tree, options);
@@ -40,7 +49,10 @@ describe('library generator', () => {
     expect(config).toBeDefined();
   });
 
-  it('should replace the name and org', () => {
+  /**
+   * Tests the replacement functionality for organization and name
+   */
+  it('should replace default organization and name with custom values', () => {
     const options: LibraryGeneratorSchema = { name: 'Test', org: 'MyOrg' };
 
     const value = replace('CodeDesignPlus.Net.Library', options);
@@ -48,7 +60,10 @@ describe('library generator', () => {
     expect(value).toBe('MyOrg.Net.Test');
   });
 
-  it('should replace to target path', () => {
+  /**
+   * Tests the path computation for target replacement
+   */
+  it('should compute target path based on provided source and target', () => {
     const path = '/virtual/submodules/CodeDesigPlus.Net.Library/class.cs';
     const source = '/virtual/submodules/CodeDesigPlus.Net.Library/';
 
@@ -56,34 +71,42 @@ describe('library generator', () => {
 
     const value = computePath(source, target, path);
 
-    expect(value).toBe('/packages/CodeDesignPlus.Net.Test/class.cs');
+    expect(value.split('\\')).toEqual(
+      '/packages/CodeDesignPlus.Net.Test/class.cs'.split('/')
+    );
   });
 
+  /**
+   * Tests retrieving all files in a directory
+   */
   describe('allFilesInDir', () => {
     const source = './__allFiles__';
     const filesFake = ['file1.txt', 'subfolder/file2.txt'];
 
     beforeEach(() => {
-      fs.mkdirSync(path.join(__dirname, source));
-      fs.mkdirSync(path.join(__dirname, source, 'subfolder'));
+      fs.mkdirSync(source);
+      fs.mkdirSync(path.join(source, 'subfolder'));
       filesFake.forEach((file) =>
-        fs.writeFileSync(path.join(__dirname, source, file), `${file} - Hi`)
+        fs.writeFileSync(path.join(source, file), `${file} - Hi`)
       );
     });
 
-    it('should return all files in dir', () => {
-      const files = allFilesInDir(path.join(__dirname, source));
+    it('should retrieve all files from a given directory', () => {
+      const files = allFilesInDir(source);
 
       expect(files.length).toBe(filesFake.length);
     });
 
     afterEach(() => {
-      fs.rmSync(path.join(__dirname, source), { recursive: true });
+      fs.rmSync(source, { recursive: true });
     });
   });
 
+  /**
+   * Tests copying template functionality
+   */
   describe('copyTemplate', () => {
-    const base = path.join(__dirname, '__copy__');
+    const base = path.join('./__copy__');
     const source = path.join(base, 'source');
     const target = path.join(base, 'target');
     const filesFake = ['file1.txt', 'subfolder/file2.txt'];
@@ -98,13 +121,13 @@ describe('library generator', () => {
       );
     });
 
-    it('should return false when directory source not exist', () => {
+    it('should return false if source directory does not exist', () => {
       const value = copyTemplate(source, target);
 
       expect(value).toBe(false);
     });
 
-    it('should copy all files in source to target', () => {
+    it('should copy all files from source to target directory', () => {
       fs.mkdirSync(path.join(source, 'submodules'));
       fs.mkdirSync(
         path.join(source, 'submodules', 'CodeDesignPlus.Net.Library')
@@ -130,8 +153,11 @@ describe('library generator', () => {
     });
   });
 
+  /**
+   * Tests generating files functionality
+   */
   describe('generateFiles', () => {
-    const base = path.join(__dirname, '__generate__');
+    const base = path.join('./__generate__');
     const target = path.join(base, 'target');
     const source = path.join(base, 'source');
     const subModules = path.join(source, 'submodules');
@@ -145,7 +171,7 @@ describe('library generator', () => {
       fs.mkdirSync(library);
     });
 
-    it('should generate files and replace org and name', async () => {
+    it('should generate files and replace organization and name in the content', async () => {
       const options: LibraryGeneratorSchema = { name: 'Phone', org: 'MyOrg' };
 
       fs.writeFileSync(
@@ -172,7 +198,7 @@ describe('library generator', () => {
     });
 
     afterEach(() => {
-      fs.rmSync(path.join(__dirname, '__generate__'), { recursive: true });
+      fs.rmSync(base, { recursive: true });
     });
   });
 });

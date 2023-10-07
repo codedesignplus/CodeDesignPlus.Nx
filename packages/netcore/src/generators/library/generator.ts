@@ -9,7 +9,6 @@ import {
 import { addProjectConfiguration, formatFiles, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { LibraryGeneratorSchema } from './schema';
-import { logger } from 'nx/src/devkit-exports';
 
 /**
  * Generate the new library
@@ -55,8 +54,6 @@ export function copyTemplate(sourcePath: string, target: string): boolean {
   const source = `${sourcePath}/submodules/CodeDesignPlus.Net.Library`;
 
   if (!existsSync(source)) {
-    logger.warn(`The ${source} not found`);
-
     return false;
   }
 
