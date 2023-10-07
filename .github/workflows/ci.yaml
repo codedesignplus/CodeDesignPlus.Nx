@@ -80,7 +80,7 @@ jobs:
 
       - name: Run Publish
         if: env.IS_RELEASE == 'true' || env.IS_RC == 'true' || env.IS_BETA == 'true'
-        run: pnpm run affected:publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run affected:publish --npm-token=${{ secrets.NPM_TOKEN }} and --npm-gh-token=${{ secrets.GH_PACKAGE_TOKEN }}
 
       - name: Push tag
         id: push_tag
