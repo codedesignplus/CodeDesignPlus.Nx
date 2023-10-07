@@ -6,10 +6,10 @@
     <img src="https://i.imgur.com/PwbGy0o.png" alt="Logo">
   </a>
 
-  <h3 align="center">CodeDesignPlus.MyProject</h3>
+  <h3 align="center">@codedesignplus/netcore</h3>
 
   <p align="center">
-    Description Library
+     An Nx plugin tailored for streamlined .NET Core development.
     <br />  
     <a href="https://codedesignplus.com">
       <strong>Explore the docs »</strong>
@@ -143,7 +143,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE.md) for more informatio
 
 CodeDesignPlus - [@CodeDesignPlus](https://www.facebook.com/Codedesignplus-115087913695067) - codedesignplus@outlook.com
 
-Project Link: [MyProject](https://github.com/codedesignplus/)
+Project Link: [CodeDesignPlus.Nx](https://github.com/codedesignplus/)
 
 <!-- ACKNOWLEDGEMENTS -->
 

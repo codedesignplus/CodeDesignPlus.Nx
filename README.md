@@ -6,10 +6,10 @@
     <img src="https://i.imgur.com/PwbGy0o.png" alt="Logo">
   </a>
 
-  <h3 align="center">CodeDesignPlus.MyProject</h3>
+  <h3 align="center">CodeDesignPlus.Nx</h3>
 
   <p align="center">
-    Description Library
+    "Nx plugin to enhance development in .NET, React, Angular, Next.js, and beyond."
     <br />
     <a href="https://codedesignplus.com">
       <strong>Explore the docs »</strong>
@@ -152,7 +152,7 @@ This would generate a library named "MyOrg.Net.MyLib" in the `packages/` folder.
 
 ## Roadmap
 
-Refer to [issues](https://github.com/codedesignplus/MyProject/issues) for a list of proposed features and known issues.
+Refer to [issues](https://github.com/codedesignplus/CodeDesignPlus.Nx/issues) for a list of proposed features and known issues.
 
 <!-- CONTRIBUTING -->
 
@@ -176,7 +176,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE.md) for more informatio
 
 CodeDesignPlus - [@CodeDesignPlus](https://www.facebook.com/Codedesignplus-115087913695067) - codedesignplus@outlook.com
 
-Project Link: [MyProject](https://github.com/codedesignplus/)
+Project Link: [CodeDesignPlus.Nx](https://github.com/codedesignplus/CodeDesignPlus.Nx)
 
 <!-- ACKNOWLEDGEMENTS -->
 
