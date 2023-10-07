@@ -36,11 +36,9 @@ export async function libraryGenerator(
     targets: {},
   });
 
-  const template = copyTemplate(tree.root, source);
+  copyTemplate(tree.root, source);
 
-  if (template) {
-    generateFiles(tree, source, target, options);
-  }
+  generateFiles(tree, source, target, options);
 
   await formatFiles(tree);
 }
