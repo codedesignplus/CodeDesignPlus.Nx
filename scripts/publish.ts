@@ -162,14 +162,14 @@ export class Publish {
 
     fs.writeFileSync(`${packagePath}/.npmrc`, content, 'utf8');
 
-    console.log(`********** Publish npmjs ************`);
+    // console.log(`********** Publish npmjs ************`);
 
-    execSync(
-      `npm publish --registry=https://registry.npmjs.org/ --access public`,
-      {
-        cwd: packagePath,
-      }
-    );
+    // execSync(
+    //   `npm publish --registry=https://registry.npmjs.org/ --access public`,
+    //   {
+    //     cwd: packagePath,
+    //   }
+    // );
 
     console.log(`********** Publish github ************`);
 
