@@ -71,7 +71,7 @@ describe('library generator', () => {
 
     const value = computePath(source, target, path);
 
-    expect(value.split('\\')).toEqual(
+    expect(value.split(/[\\/]/)).toEqual(
       '/packages/CodeDesignPlus.Net.Test/class.cs'.split('/')
     );
   });
