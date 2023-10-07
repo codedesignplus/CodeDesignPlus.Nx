@@ -57,12 +57,6 @@ export function copyTemplate(sourcePath: string, target: string): boolean {
     return false;
   }
 
-  if (existsSync(target)) {
-    rmSync(target, {
-      recursive: true,
-    });
-  }
-
   cpSync(source, target, {
     recursive: true,
   });
