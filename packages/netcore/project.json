@@ -63,6 +63,24 @@
     },
     "submodule": {
       "command": "git submodule add -f https://github.com/codedesignplus/CodeDesignPlus.Net.Library.git ./submodules/CodeDesignPlus.Net.Library && rm -rf ./packages/netcore/src/generators/library/files/* && cp -r ./submodules/CodeDesignPlus.Net.Library/* ./packages/netcore/src/generators/library/files/"
+    },
+    "sonarqube": {
+      "executor": "@koliveira15/nx-sonarqube:scan",
+      "options": {
+        "name": "@codedesignplus/netcore",
+        "hostUrl": "https://sonarcloud.io/",
+        "projectKey": "CodeDesignPlus.Nx.Key",
+        "organization": "codedesignplus",
+        "skipTargetDefaults": false,
+        "branches": false,
+        "qualityGate": false,
+        "qualityGateTimeout": "600",
+        "skipImplicitDeps": false,
+        "exclusions": "**/*.d.ts",
+        "extra": {
+          "sonar.javascript.lcov.reportPaths": "coverage/packages/netcore/lcov.info"
+        }
+      }
     }
   },
   "tags": []
