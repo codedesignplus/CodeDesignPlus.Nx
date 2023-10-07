@@ -5,7 +5,7 @@ on:
       - main
       - rc
       - dev
-      - feature/*
+      - feature*
 env:
   IS_RELEASE: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
   IS_RC: ${{ github.ref == 'refs/heads/rc' }}
