@@ -20,6 +20,9 @@
     },
     "test": {
       "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+    },
+    "sonar": {
+      "dependsOn": ["^test", "test"]
     }
   }
 }

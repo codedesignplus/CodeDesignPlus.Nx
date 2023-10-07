@@ -1,6 +1,6 @@
 {
   "name": "@codedesignplus/netcore",
-  "version": "0.0.0",
+  "version": "0.1.1-alpha.0",
   "type": "commonjs",
   "generators": "./generators.json",
   "author": {
