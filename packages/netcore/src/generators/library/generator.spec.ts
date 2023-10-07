@@ -184,7 +184,7 @@ describe('library generator', () => {
       const fileExpected = path.join(
         target,
         'submodules',
-        'CodeDesignPlus.Net.Library',
+        'MyOrg.Net.Phone',
         'PhoneService.cs'
       );
       const exist = tree.exists(fileExpected);

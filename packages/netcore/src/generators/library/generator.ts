@@ -90,7 +90,9 @@ export function generateFiles(
 
     const newContent = replace(template, options);
 
-    tree.write(newFile, newContent);
+    const path = replace(newFile, options);
+
+    tree.write(path, newContent);
   });
 }
 
