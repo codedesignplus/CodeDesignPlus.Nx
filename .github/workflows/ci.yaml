@@ -53,7 +53,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install
 
       - name: Run Affected
         run: pnpm run affected
