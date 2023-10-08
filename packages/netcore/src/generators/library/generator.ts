@@ -38,26 +38,25 @@ export async function libraryGenerator(
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command: 'dotnet restore {projectRoot}/${library}.sln',
+          command: `dotnet restore {projectRoot}/${library}.sln`,
         },
       },
       format: {
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command: 'dotnet format {projectRoot}/${library}.sln',
+          command: `dotnet format {projectRoot}/${library}.sln`,
         },
       },
       build: {
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command: 'dotnet build {projectRoot}/${library}.sln',
+          command: `dotnet build {projectRoot}/${library}.sln`,
         },
         configurations: {
           production: {
-            command:
-              'dotnet build {projectRoot}/${library}.sln --configuration Release',
+            command: `dotnet build {projectRoot}/${library}.sln --configuration Release`,
           },
         },
       },
@@ -65,21 +64,20 @@ export async function libraryGenerator(
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command: 'dotnet test {projectRoot}/${library}.sln',
+          command: `dotnet test {projectRoot}/${library}.sln`,
         },
         configurations: {
           coverage: {
-            command:
-              'dotnet test {projectRoot}/${library}.sln --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover',
+            command: `dotnet test {projectRoot}/${library}.sln --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover`,
           },
         },
       },
       sonarqube: {
         executor: '@koliveira15/nx-sonarqube:scan',
         options: {
-          name: '${library}',
+          name: `${library}`,
           hostUrl: 'https://sonarcloud.io/',
-          projectKey: '${library}.Key',
+          projectKey: `${library}.Key`,
           organization: 'codedesignplus',
           skipTargetDefaults: false,
           branches: false,
@@ -88,8 +86,7 @@ export async function libraryGenerator(
           skipImplicitDeps: false,
           exclusions: '**Tests*.cs',
           extra: {
-            'sonar.cs.opencover.reportsPaths':
-              '{projectRoot}/tests/${library}.Test/coverage.opencover.xml',
+            'sonar.cs.opencover.reportsPaths': `{projectRoot}/tests/${library}.Test/coverage.opencover.xml`,
           },
         },
       },
@@ -97,16 +94,14 @@ export async function libraryGenerator(
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command:
-            'dotnet pack {projectRoot}/${library}.sln --configuration Release /p:Version={args.version} --output dist/${library}',
+          command: `dotnet pack {projectRoot}/${library}.sln --configuration Release /p:Version={args.version} --output dist/${library}`,
         },
       },
       push: {
         executor: 'nx:run-commands',
         outputs: [],
         options: {
-          command:
-            'dotnet nuget push dist/${library}/*.nupkg --source {args.source} --api-key {args.token}',
+          command: `dotnet nuget push dist/${library}/*.nupkg --source {args.source} --api-key {args.token}`,
         },
       },
     },
