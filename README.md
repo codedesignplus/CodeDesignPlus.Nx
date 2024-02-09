@@ -1,4 +1,4 @@
-<!-- PROJECT LOGO -->
+<!-- PROJECT LOGO   -->
 
 <br />
 <p align="center">
@@ -6,7 +6,7 @@
     <img src="https://i.imgur.com/PwbGy0o.png" alt="Logo">
   </a>
 
-  <h3 align="center">CodeDesignPlus.Nx</h3>
+  <h3 align="center">CodeDesignPlus.Nx </h3>
 
   <p align="center">
     "Nx plugin to enhance development in .NET, React, Angular, Next.js, and beyond."
