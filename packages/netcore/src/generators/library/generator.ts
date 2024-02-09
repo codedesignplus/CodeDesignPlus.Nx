@@ -12,7 +12,7 @@ import { LibraryGeneratorSchema } from './schema';
 
 /**
  * Generate the new library
- * @param tree Virtual FIle system tree
+ * @param tree Virtual FIle system tree to create the new library
  * @param options Library Options
  */
 export async function libraryGenerator(
