@@ -190,6 +190,8 @@ export class Publish {
    * For each deployable library, this method will execute the deployment process.
    */
   public initialize = () => {
+    console.log(`Initialize Publish ...\n`);
+
     const deployableLibs: string[] = this.getDeployableLibs();
 
     for (const lib of deployableLibs) {

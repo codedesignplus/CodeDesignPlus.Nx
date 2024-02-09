@@ -116,7 +116,7 @@ export async function libraryGenerator(
 
 /**
  * Copy template from submodules/CodeDesignPlus.Net.Library to files
- * @param target Source destination
+ * @param target Source destination to copy the template
  * @param sourcePath Source origin
  */
 export function copyTemplate(sourcePath: string, target: string): boolean {
