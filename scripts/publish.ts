@@ -101,7 +101,7 @@ export class Publish {
       majorIdentifier: 'breaking:',
       minorIdentifier: 'feat:',
       folder: projectPath,
-      dirAffected: name,
+      dirAffected: `${name}/`,
       previousVersion: true,
       newVersion: true,
     };
